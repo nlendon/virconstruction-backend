@@ -1,0 +1,4 @@
+const DropDatabase = async () => {
+}
+
+DropDatabase();
