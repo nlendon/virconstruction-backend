@@ -1,10 +1,9 @@
-import Router, { Application, Request, Response } from 'express';
+import Router, { Request, Response } from 'express';
+import auth_router from './auth/auth.router';
 
 const router = Router();
-import AdminAuth from '../middlewares/auth/admin.auth';
 
-// router.use('/auth', auth_router);
-// router.use('/admin', AdminAuth as Application, admin_router);
+router.use('/auth', auth_router);
 
 //Global
 router.use('/', (req: Request, res: Response) => {

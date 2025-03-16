@@ -1,22 +1,21 @@
 import Router, { Application } from 'express';
-// import { AuthController } from '../../components/auth';
-// import { validate } from '../../middlewares/validations/validate.schema';
-// import { ChangePasswordSchema, ResetPasswordSchema, SignInSchema, activationSchema, forgotPasswordSchema } from '../../schema/auth.schema';
-// import { AnyZodObject } from 'zod';
+import { AnyZodObject } from 'zod';
+import AuthController from '../../components/auth/auth.controller';
+import { validate } from '../../middlewares/validations/validate.schema';
+import {
+  activationSchema,
+  ChangePasswordSchema,
+  forgotPasswordSchema,
+  ResetPasswordSchema,
+  SignInSchema,
+} from '../../schema/auth.schema';
 
 const router = Router();
-//
-// router.post('/request_invite', AuthController.request_invite);
-// router.post('/activate_invite', AuthController.activate_invite);
-// router.post('/sign-in', AuthController.sign_in);
-// router.post('/forgot-password', AuthController.forgot_password);
-// router.post('/telegram_auth', AuthController.telegram_auth);
-// router.post('/check_token', AuthController.check_token);
 
-// router.post('/sign-in', validate(SignInSchema as AnyZodObject), AuthController.signIn as Application);
-// router.post('/forgot', validate(forgotPasswordSchema as AnyZodObject), AuthController.forgotPassword as Application);
-// router.post('/reset-password', validate(ResetPasswordSchema as AnyZodObject), AuthController.resetPassword as Application);
-// router.post('/change-password', validate(ChangePasswordSchema as AnyZodObject), AuthController.changePassword as Application);
-// router.post('/account/activation', validate(activationSchema as AnyZodObject), AuthController.activation as Application);
+router.post('/sign-in', validate(SignInSchema as AnyZodObject), AuthController.sign_in as Application);
+router.post('/forgot-password', validate(forgotPasswordSchema as AnyZodObject), AuthController.forgot_password as Application);
+router.post('/reset-password', validate(ResetPasswordSchema as AnyZodObject), AuthController.reset_password as Application);
+router.post('/change-password', validate(ChangePasswordSchema as AnyZodObject), AuthController.change_password as Application);
+router.post('/account/activation', validate(activationSchema as AnyZodObject), AuthController.account_activation as Application);
 
 export default router;
