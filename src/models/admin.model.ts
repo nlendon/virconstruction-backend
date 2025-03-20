@@ -1,7 +1,9 @@
 import { Database } from '../database/database.init';
 import { DataTypes } from 'sequelize';
 import { v4 as uuid } from 'uuid';
+import { generateToken } from '../helpers/token.generator';
 import Bcrypt from 'bcrypt';
+import Mailer from '../helpers/node.mailer';
 
 export const AdminModel = Database.define('admins', {
   id: { type: DataTypes.UUID(), unique: true, primaryKey: true },
@@ -18,15 +20,13 @@ AdminModel.beforeCreate(async (user: any) => {
   if (user.password)
     user.password = await Bcrypt.hash(user.password, 10);
   else user.password = 'waiting-response';
-  //Closed Registration
-
-  // await Mailer.activation(
-  //   user.email,
-  //     generateToken('24h', {
-  //         id: user.id,
-  //         secret: user.secret,
-  //         email: user.email,
-  //         role: user.role
-  //     }) as string,
-  //     user.fullName);
+  await Mailer.activation(
+    user.email,
+    generateToken('24h', {
+      id: user.id,
+      secret: user.secret,
+      email: user.email,
+      role: user.role,
+    }) as any,
+    user.fullName);
 });

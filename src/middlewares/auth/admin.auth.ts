@@ -13,7 +13,7 @@ const AdminAuth = (req: Request, res: Response, next: NextFunction) => {
     let data: JwtPayload;
     try {
       data = Jwt.verify(token, SECRET_KEY as Secret) as JwtPayload;
-      if (!data || data.role !== 'admin') {
+      if (!data) {
         next(ApiErrors.badRequest('Permission Denied'));
       }
     } catch (e) {
