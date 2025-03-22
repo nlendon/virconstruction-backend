@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "nodemon ./src/index.ts",
     "database:drop": "nodemon ./src/database/drop.database.ts",
-    "database:addAdmin": "nodemon ./src/database/migrations/addDefaultAdmin.ts"
+    "database:addAdmin": "nodemon ./src/database/migrations/addDefaultAdmin.ts",
+    "database:addGlobals": "nodemon ./src/database/migrations/addGlobals.ts"
   },
   "author": "n1endon",
   "license": "ISC",
