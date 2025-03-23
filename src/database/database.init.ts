@@ -6,7 +6,7 @@ export const Database = new Sequelize(
   process.env.DB_USER as string,
   process.env.DB_PASS as string,
   {
-    dialect: 'mysql',
+    dialect: 'postgres',
     host: process.env.DB_HOST as string
   }
 );

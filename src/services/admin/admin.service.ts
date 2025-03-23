@@ -11,11 +11,15 @@ class AdminService {
       const { rows } = await AdminModel.findAndCountAll({
         where: {
           ...(search && {
-            [Op.or]: [
-              { full_name: { [Op.like]: `%${search}%` } },
-              { email: { [Op.like]: `%${search}%` } },
-            ],
-          }),
+            [Op.or]: {
+              full_name: {
+                [Op.iLike]: `%${search}%`
+              },
+              email: {
+                [Op.iLike]: `%${search}%`
+              }
+            }
+          })
         },
         attributes: ['id', 'full_name', 'email', 'is_verified'],
       });
