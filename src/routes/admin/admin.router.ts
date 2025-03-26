@@ -9,7 +9,7 @@ const router = Router();
 router.post('/get-all', AdminComponent.get_all as Application);
 router.get('/get-by-id/:id', AdminComponent.get_id as Application);
 router.post('/create', validate(UserCreateSchema as AnyZodObject), AdminComponent.create as Application);
-router.delete('/delete', validate(UserGetDeleteByIdSchema as AnyZodObject), AdminComponent.delete as Application);
+router.post('/delete', validate(UserGetDeleteByIdSchema as AnyZodObject), AdminComponent.delete as Application);
 
 
 export default router;

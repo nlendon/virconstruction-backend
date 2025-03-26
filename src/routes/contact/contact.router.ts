@@ -10,7 +10,7 @@ const router = Router();
 router.get('/get-all', AdminAuth, ContactController.get_all as Application);
 router.post('/create', validate(ContactCreateSchema as AnyZodObject), ContactController.create as Application);
 router.get('/get-by-id/:id', AdminAuth, ContactController.get_id as Application);
-router.delete('/delete', AdminAuth, validate(ContactGetDeleteByIdSchema as AnyZodObject), ContactController.delete as Application);
+router.post('/delete', AdminAuth, validate(ContactGetDeleteByIdSchema as AnyZodObject), ContactController.delete as Application);
 
 
 export default router;

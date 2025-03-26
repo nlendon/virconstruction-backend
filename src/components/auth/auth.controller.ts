@@ -36,7 +36,7 @@ class AuthController {
     try {
       const payload: { oldPassword: string; newPassword: string; repeatPassword: string } = req.body;
       const {
-        headers: { authorization }
+        headers: { authorization },
       } = req;
       const result = await AuthService.change_password(authorization, payload);
       res.status(result.status).send(result);
@@ -55,6 +55,15 @@ class AuthController {
     }
   };
 
+  static token_check = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const { token } = req.body;
+      const result = await AuthService.check_token(token);
+      res.status(result.status).send(result);
+    } catch (e) {
+      next(ApiError.badRequest(e));
+    }
+  };
 }
 
 export default AuthController;

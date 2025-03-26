@@ -8,6 +8,6 @@ const DropDatabase = async () => {
   await ContactModel.sync({ force: true });
   await ReviewModel.sync({ force: true });
   await GlobalModel.sync({ force: true });
-}
+};
 
 DropDatabase();

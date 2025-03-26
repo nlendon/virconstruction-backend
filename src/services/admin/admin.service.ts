@@ -1,7 +1,7 @@
 import ApiError from '../../errors/api.errors';
 import { Get_Promise_Type } from './type';
 import { AdminModel } from '../../models/admin.model';
-import { Op } from 'sequelize';
+import { Op, Sequelize } from 'sequelize';
 import { AdminModelType, DefResult } from '../../types/auth.types';
 import { IPayloadAdmin } from '../../types/admin.types';
 
@@ -13,15 +13,15 @@ class AdminService {
           ...(search && {
             [Op.or]: {
               full_name: {
-                [Op.iLike]: `%${search}%`
+                [Op.iLike]: `%${search}%`,
               },
               email: {
-                [Op.iLike]: `%${search}%`
-              }
-            }
-          })
+                [Op.iLike]: `%${search}%`,
+              },
+            },
+          }),
         },
-        attributes: ['id', 'full_name', 'email', 'is_verified'],
+        attributes: [['id', 'key'], 'full_name', 'email', 'is_verified', [Sequelize.fn('TO_CHAR', Sequelize.col('createdAt'), 'DD-MM-YYYY'), 'createdAt']],
       });
       return {
         status: 200,

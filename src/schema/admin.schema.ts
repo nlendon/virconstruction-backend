@@ -9,11 +9,11 @@ export const UserCreateSchema = object({
       .min(16, 'Email must contain minimum 6 digits')
       .max(50, 'Email cannot contain more than 50 digits')
       .email('Invalid  Email'),
-  })
+  }),
 });
 
 export const UserGetDeleteByIdSchema = object({
   body: object({
-    id: string({ invalid_type_error: 'Invalid Type of Id' }).trim().uuid()
-  })
+    id: string({ invalid_type_error: 'Invalid Type of Id' }).trim().uuid(),
+  }),
 });

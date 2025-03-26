@@ -3,6 +3,7 @@ import { DefResult } from '../../types/auth.types';
 import { ContactModel } from '../../models/contact.model';
 import { ContactGetType } from '../../types/contact.types';
 import { v4 as uuid } from 'uuid';
+import { Sequelize } from 'sequelize';
 
 class ContactService {
   static create = async (payload: any): Promise<ApiError | DefResult> => {
@@ -29,7 +30,11 @@ class ContactService {
 
   static get_all = async (): Promise<ApiError | ContactGetType> => {
     try {
-      const requests = await ContactModel.findAll();
+      const requests = await ContactModel.findAll(
+        {
+          attributes: [['id', 'key'], 'full_name', 'email', 'message', [Sequelize.fn('TO_CHAR', Sequelize.col('createdAt'), 'DD-MM-YYYY'), 'createdAt']],
+        },
+      );
       return { data: requests, status: 200 };
     } catch (e) {
       return ApiError.badRequest(e);

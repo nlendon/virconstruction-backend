@@ -17,5 +17,6 @@ router.post('/forgot-password', validate(forgotPasswordSchema as AnyZodObject), 
 router.post('/reset-password', validate(ResetPasswordSchema as AnyZodObject), AuthController.reset_password as Application);
 router.post('/change-password', validate(ChangePasswordSchema as AnyZodObject), AuthController.change_password as Application);
 router.post('/account/activation', validate(activationSchema as AnyZodObject), AuthController.account_activation as Application);
+router.post('/account/check-token', AuthController.token_check as Application);
 
 export default router;

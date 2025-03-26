@@ -10,7 +10,7 @@ const router = Router();
 router.get('/get-all', ReviewController.get_all as Application);
 router.post('/create', validate(ReviewCreateSchema as AnyZodObject), AdminAuth, ReviewController.create as Application);
 router.get('/get-by-id/:id', ReviewController.get_id as Application);
-router.delete('/delete', AdminAuth, validate(ReviewGetDeleteByIdSchema as AnyZodObject), ReviewController.delete as Application);
+router.post('/delete', AdminAuth, validate(ReviewGetDeleteByIdSchema as AnyZodObject), ReviewController.delete as Application);
 router.post('/update/:id', AdminAuth, validate(ReviewUpdateSchema as AnyZodObject), ReviewController.update as Application);
 
 export default router;

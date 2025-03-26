@@ -6,6 +6,8 @@ import ApiError from '../../errors/api.errors';
 import Bcrypt from 'bcrypt';
 import Mailer from '../../helpers/node.mailer';
 import Jwt, { JwtPayload, Secret } from 'jsonwebtoken';
+import { Database } from '../../database/database.init';
+import { CheckTokenType } from './type';
 
 class AuthService {
   static sign_in = async (payload: AuthPayload): Promise<SignInPromise | ApiError | DefResult> => {
@@ -20,7 +22,7 @@ class AuthService {
         full_name: admin.full_name,
         email: admin.email,
         role: admin.role,
-        token: generateToken('14d', { id: admin.id, email: admin.email, role: admin.role }) as string | null,
+        token: generateToken('14d', { id: admin.id, email: admin.email }) as string | null,
       };
     } catch (e) {
       return ApiError.badRequest(e);
@@ -35,7 +37,6 @@ class AuthService {
         const checkToken: any = generateToken('1h', {
           id: admin.id,
           email: admin.email,
-          role: admin.role,
           secret,
         });
         await admin.update({ secret });
@@ -99,7 +100,7 @@ class AuthService {
         return ApiError.notFound('Administrator has not been found, or old password is incorrect');
       }
     } catch (e) {
-      throw ApiError.badRequest(e);
+      return ApiError.badRequest(e);
     }
   };
 
@@ -125,10 +126,26 @@ class AuthService {
         message: 'Administrator has been activated successfully',
       };
     } catch (e) {
-      throw ApiError.badRequest(e);
+      return ApiError.badRequest(e);
     }
   };
 
+
+  static check_token = async (token: string): Promise<ApiError | CheckTokenType> => {
+    try {
+      let data: JwtPayload;
+      try {
+        data = Jwt.verify(token, process.env.SECRET_KEY as Secret) as JwtPayload;
+      } catch (e) {
+        return ApiError.badRequest('Expired or Invalid Token');
+      }
+      const admin = await AdminModel.findByPk(data.id) as AdminModelType | null;
+      if (!admin || admin.password === 'waiting-response') return { status: 401, isValid: false };
+      else return { status: 200, isValid: true };
+    } catch (e) {
+      return ApiError.badRequest(e);
+    }
+  };
 }
 
 export default AuthService;

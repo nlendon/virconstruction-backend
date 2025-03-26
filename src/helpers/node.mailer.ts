@@ -13,8 +13,8 @@ class Mailer {
     secure: true,
     auth: {
       user: process.env.SMTP_USER as string,
-      pass: process.env.SMTP_PASSWORD as string
-    }
+      pass: process.env.SMTP_PASSWORD as string,
+    },
   };
   static transporter = createTransport(Mailer.transporterOptions as any);
 
@@ -34,9 +34,9 @@ class Mailer {
         {
           filename: 'image.jpg',
           content: Mailer.logo,
-          cid: 'imageAttachment'
-        }
-      ]
+          cid: 'imageAttachment',
+        },
+      ],
     });
   };
   static forgotPassword = async (email: string, token: string, fullName: string) => {
@@ -54,9 +54,9 @@ class Mailer {
         {
           filename: 'image.jpg',
           content: Mailer.logo,
-          cid: 'imageAttachment'
-        }
-      ]
+          cid: 'imageAttachment',
+        },
+      ],
     });
   };
 }

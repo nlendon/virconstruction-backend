@@ -26,11 +26,11 @@ const addGlobals = async () => {
         name: 'run_projects',
         value: false,
         count: 50,
-      }
-    ])
+      },
+    ]);
   } catch (e) {
     console.error(e);
   }
-}
+};
 
-addGlobals()
+addGlobals();

@@ -3,6 +3,7 @@ import { ReviewGetType, ReviewModelType, ReviewPayloadType } from '../../types/r
 import { ReviewModel } from '../../models/review.model';
 import { v4 as uuid } from 'uuid';
 import ApiError from '../../errors/api.errors';
+import { Sequelize } from 'sequelize';
 
 class ReviewService {
   static create = async (payload: ReviewPayloadType): Promise<DefResult | ApiError> => {
@@ -18,7 +19,9 @@ class ReviewService {
 
   static get_all = async (): Promise<ApiError | ReviewGetType> => {
     try {
-      const reviews = await ReviewModel.findAll();
+      const reviews = await ReviewModel.findAll({
+        attributes: [['id', 'key'], 'profession', 'review', 'full_name', [Sequelize.fn('TO_CHAR', Sequelize.col('createdAt'), 'DD-MM-YYYY'), 'createdAt']],
+      });
       return {
         data: reviews,
         status: 200,

@@ -30,7 +30,7 @@ class UploaderService {
       });
       return {
         message: 'File deleted successfully',
-        status: 200
+        status: 200,
       };
     } catch (e) {
       throw ApiError.badRequest(e);

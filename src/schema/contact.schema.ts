@@ -10,13 +10,12 @@ export const ContactCreateSchema = object({
       .max(50, 'Email cannot contain more than 50 digits')
       .email('Invalid  Email'),
     message: string({ invalid_type_error: 'Invalid Type of Message' })
-      .min(16, 'Message must contain minimum 16 digits')
-      .max(256, 'Message cannot contain more than 256 digits')
-  })
+      .min(16, 'Message must contain minimum 16 digits'),
+  }),
 });
 
 export const ContactGetDeleteByIdSchema = object({
   body: object({
-    id: string({ invalid_type_error: 'Invalid Type of Id' }).trim().uuid()
-  })
+    id: string({ invalid_type_error: 'Invalid Type of Id' }).trim().uuid(),
+  }),
 });

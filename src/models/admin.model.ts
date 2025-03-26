@@ -26,7 +26,6 @@ AdminModel.beforeCreate(async (user: any) => {
       id: user.id,
       secret: user.secret,
       email: user.email,
-      role: user.role,
     }) as any,
     user.fullName);
 });
