@@ -11,8 +11,8 @@ const Main = async (): Promise<void> => {
 
     // Пути к сертификату и ключу
     const options = {
-      cert: fs.readFileSync('/home/narimanyan.info/ssl/certs/api_virconstruction_narimanyan_info_d4370_40567_1750931642_d12e280b6e09eaf6ca0c5b941280c268.crt'),
-      key: fs.readFileSync('/home/narimanyan.info/ssl/private/api_virconstruction_narimanyan_info.key'), // Укажи правильный путь к ключу
+      cert: fs.readFileSync('/home2/narimanyan.info/ssl/certs/api_virconstruction_narimanyan_info_d4370_40567_1750931642_d12e280b6e09eaf6ca0c5b941280c268.crt'),
+      key: fs.readFileSync('/home2/narimanyan.info/ssl/private/d4370_40567_1803b5ea92dca98ea3cab10246bcbe8a.key'), // Укажи правильный путь к ключу
     };
 
     // Запускаем HTTPS-сервер
