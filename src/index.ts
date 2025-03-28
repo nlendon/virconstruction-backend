@@ -6,9 +6,16 @@ const Main = async (): Promise<void> => {
   try {
     await Database.authenticate();
     await Database.sync({ force: false });
-    App.listen(process.env.PORT, (): void => console.log(`Server started on port ${process.env.PORT}`));
+    
+    App.listen(
+      process.env.PORT,
+      process.env.HOST,
+      (): void => {
+        console.log(`Server started on http://${process.env.HOST}:${process.env.PORT}`);
+      }
+    );
   } catch (e) {
-    console.log(`error: ${e}` as string);
+    console.log(`error: ${e}`);
   }
 };
 
