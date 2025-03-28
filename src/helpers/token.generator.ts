@@ -1,6 +1,6 @@
 import Jwt, { Secret } from 'jsonwebtoken';
 
-export const generateToken = (expires: string, data: { id: string, email: string, secret?: string }) => {
+export const generateToken = (expires: string, data: { id: string, email: string, secret?: string }): any => {
   if (expires && data) {
     // @ts-ignore
     return Jwt.sign(

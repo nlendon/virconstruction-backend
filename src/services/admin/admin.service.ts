@@ -37,7 +37,7 @@ class AdminService {
       const admin = await AdminModel.findByPk(id, {
         attributes: ['id',
           'email', 'full_name', 'is_verified'],
-      }) as AdminModelType | null;
+      }) as any;
       if (!admin) return ApiError.notFound('Administrator with current ID does not exist');
       return {
         data: admin,

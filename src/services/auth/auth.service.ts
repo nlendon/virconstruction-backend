@@ -12,7 +12,7 @@ import { CheckTokenType } from './type';
 class AuthService {
   static sign_in = async (payload: AuthPayload): Promise<SignInPromise | ApiError | DefResult> => {
     try {
-      const admin = await AdminModel.findOne({ where: { email: payload.email } }) as AdminModelType | null;
+      const admin = await AdminModel.findOne({ where: { email: payload.email } }) as any;
       if (!admin) return { message: 'Incorrect Email', status: 404 };
       if (!Bcrypt.compareSync(payload.password, <string>admin?.password))
         return { message: 'Password is incorrect', status: 400 };
@@ -31,7 +31,7 @@ class AuthService {
 
   static forgot_password = async (email: string): Promise<ApiError | DefResult> => {
     try {
-      const admin = await AdminModel.findOne({ where: { email } }) as AdminModelType | null;
+      const admin = await AdminModel.findOne({ where: { email } }) as any;
       if (admin) {
         const secret = uuid();
         const checkToken: any = generateToken('1h', {
@@ -59,7 +59,7 @@ class AuthService {
       } catch (e) {
         return ApiError.noPermission('Expired or Invalid Token');
       }
-      const admin = await AdminModel.findOne({ where: { secret: data.secret } }) as AdminModelType | null;
+      const admin = await AdminModel.findOne({ where: { secret: data.secret } }) as any;
       if (!admin) return ApiError.badRequest('Requested reset password user is not found');
       admin.password = await Bcrypt.hash(payload.password, 10);
       admin.secret = null;
@@ -87,7 +87,7 @@ class AuthService {
       }
       if (payload.newPassword !== payload.repeatPassword)
         return ApiError.badRequest('New Password and repeat password is not the same');
-      const admin = await AdminModel.findByPk(data.id) as AdminModelType | null;
+      const admin = await AdminModel.findByPk(data.id) as any;
       if (admin && Bcrypt.compareSync(payload.oldPassword, admin.password)) {
         admin.password = await Bcrypt.hash(payload.newPassword, 10);
         admin.secret = null;
@@ -112,10 +112,10 @@ class AuthService {
       } catch (e) {
         return ApiError.badRequest('Expired or Invalid Token');
       }
-      const admin = (await AdminModel.findOne({ where: { secret: data.secret } })) as AdminModelType | null;
+      const admin = (await AdminModel.findOne({ where: { secret: data.secret } })) as any;
       if (!admin)
         return ApiError.badRequest('Administrator with current activation link does not exist or has been activated yet');
-      const updateData = {
+      const updateData: any = {
         is_verified: true,
         secret: null,
         password: await Bcrypt.hash(password, 10),
@@ -139,7 +139,7 @@ class AuthService {
       } catch (e) {
         return ApiError.badRequest('Expired or Invalid Token');
       }
-      const admin = await AdminModel.findByPk(data.id) as AdminModelType | null;
+      const admin = await AdminModel.findByPk(data.id) as any;
       if (!admin || admin.password === 'waiting-response') return { status: 401, isValid: false };
       else return { status: 200, isValid: true };
     } catch (e) {

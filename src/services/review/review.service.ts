@@ -46,7 +46,7 @@ class ReviewService {
 
   static delete = async (id: string): Promise<DefResult | ApiError> => {
     try {
-      const is_exist = await ReviewModel.findByPk(id) as ReviewModelType | null;
+      const is_exist = await ReviewModel.findByPk(id) as any;
       if (!is_exist) return ApiError.badRequest('Review with current id does not exist');
       await is_exist.destroy();
       return { message: 'Review has been deleted successfully', status: 200 };
