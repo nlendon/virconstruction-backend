@@ -8,8 +8,8 @@ const Main = async (): Promise<void> => {
     await Database.sync({ force: false });
     
     App.listen(
-      process.env.PORT,
-      process.env.HOST,
+      parseInt(process.env.PORT!), 
+      process.env.HOST!,
       (): void => {
         console.log(`Server started on http://${process.env.HOST}:${process.env.PORT}`);
       }
