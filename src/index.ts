@@ -3,6 +3,7 @@ import App from './app';
 import https from 'https';
 import fs from 'fs';
 import 'dotenv/config';
+import path from 'path';
 
 const Main = async (): Promise<void> => {
   try {
@@ -10,8 +11,8 @@ const Main = async (): Promise<void> => {
     await Database.sync({ force: false });
 
     const options = {
-      cert: fs.readFileSync('../ssl/api-vircon-sert.crt'),
-      key: fs.readFileSync('../ssl/api-vircon-keey.key'),
+      cert: fs.readFileSync(path.join(__dirname, '..', 'ssl/api-vircon-sert.crt')),
+      key: fs.readFileSync(path.join(__dirname, '..', 'ssl/api-vircon-keey.key')),
     };
 
     https.createServer(options, App).listen(
